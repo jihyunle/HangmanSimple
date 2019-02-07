@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,13 +17,17 @@ public class HangmanSimple {
         String[] answersLetters = splitWordToLetters(answer);
 
         showWordLength(answer);
+        System.out.println();
 
         // Show user their guess and # guess they have left
         int count = 0;
         userTakesGuess(count, answersLetters, answer, input);
+
+        exit();
     }
 
     public static void userTakesGuess(int count, String[] letters, String answer, Scanner input){
+        ArrayList<String> userString = new ArrayList<>();
         while (count<6){
 
             System.out.println("Enter your letter or word guess: ");
@@ -30,19 +35,23 @@ public class HangmanSimple {
 
             if (guess.equals(answer)){
                 System.out.println("You've won! The word was " + answer);
+                break;
             }
-            String userString = "";
 
-            for (int i=0; i<letters.length; i++) {
+            System.out.print("Your guess so far: ");
+            for (int i=0; i<letters.length; i++) {  // Iterates as many times as the length of the word
                 if (guess.equalsIgnoreCase(letters[i])){
-                    userString += letters[i];
+                    userString.add(i, guess);
                 } else {
-                    userString += " _ ";
-                    count++;
-                    System.out.println("You have guessed incorrectly " + count + "/6 times.");
+                    userString.add(i," _ ");
+//                    userString += " _ ";
                 }
+                System.out.print(userString.get(i));
             }
-            System.out.println("Your guess so far: " + userString);
+            count++;    // Right now it increments regardless of whether the guess was correct
+            System.out.println();
+            System.out.println("You have guessed incorrectly " + count + "/6 times.");
+//            System.out.println("Your guess so far: " + userString);
 
 
         }
@@ -87,6 +96,7 @@ public class HangmanSimple {
 
     public static void  exit(){
         System.out.println("Thank you for playing!");
+        System.exit(0);
     }
 
 }
