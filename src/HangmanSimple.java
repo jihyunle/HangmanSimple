@@ -38,6 +38,8 @@ public class HangmanSimple {
                 break;
             }
 
+            // wrongChecker
+
             System.out.print("Your guess so far: ");
             for (int i=0; i<letters.length; i++) {  // Iterates as many times as the length of the word
                 if (guess.equalsIgnoreCase(letters[i])){
