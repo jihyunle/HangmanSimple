@@ -46,9 +46,9 @@ public class HangmanSimple {
         ArrayList<String> pastGuesses = new ArrayList<>();
 
         int maxWrongGuesses = 6;
-        boolean keepGuessing = true;
+//        boolean keepGuessing = true;
 
-        while ((count < maxWrongGuesses) && keepGuessing){
+        while (count < maxWrongGuesses){
             boolean correct = false;
 
 
@@ -93,16 +93,15 @@ public class HangmanSimple {
                 break;
             }
 
-            if (!keepGuessing(userProgress, keepGuessing, word)){
-                keepGuessing = !keepGuessing;
-//                break;
+            if (keepGuessing(userProgress, word)==false){
+                break;
             }
 
         }
 
     }
 
-    public static boolean keepGuessing(String[] userProgress, boolean keepGuessing, String word){
+    public static boolean keepGuessing(String[] userProgress, String word){
         String str = "";
         for (String u:userProgress){
             str += u;
@@ -117,9 +116,9 @@ public class HangmanSimple {
         }
 
         if (str==word){
-            return !keepGuessing;
+            return false;
         } else {
-            return keepGuessing;
+            return true;
         }
     }
 
