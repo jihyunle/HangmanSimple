@@ -55,6 +55,7 @@ public class HangmanSimple {
         ArrayList<String> pastGuesses = new ArrayList<>();
 
         int maxWrongGuesses = 6;
+        int lettersGuessed = 0; // number of letters guessed correctly
 //        boolean keepGuessing = true;
 
         while ((count < maxWrongGuesses) && keepGuessing(userProgress, word)){
@@ -84,8 +85,18 @@ public class HangmanSimple {
                 if (guess.equals(letters[i])){
                     userProgress[i] = " " + guess + " ";
                     correct = true;
+                    // increment letters guessed correctly by one
+                    lettersGuessed++;
+
                 }
             }
+
+            // check if num letters guessed correctly = length of word
+            if(lettersGuessed == letters.length){
+                System.out.println("Congrats!");
+                break;
+            }
+
             count = check(correct, count);
 
 
