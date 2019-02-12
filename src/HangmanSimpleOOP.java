@@ -1,22 +1,27 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class HangmanSimpleOOP {
     private ArrayList<String> list;
-    private String answer;
-    private String[] answersLetters;
+    private String word;
+    private String[] letters;
     private String guess;
     private ArrayList<String> pastGuesses;
     private int numWrongAttempts;
     private boolean correct;
     private String[] userProgress;
+    private int maxWrongGuesses;
+    private int lettersGuessed; // number of letters guessed correctly
 
     public HangmanSimpleOOP(){
         list = new ArrayList<>();
-        answer = "";
+        word = "";
         guess = "";
         pastGuesses = new ArrayList<>();
         numWrongAttempts = 0;
+        maxWrongGuesses = 0;
+        lettersGuessed = 0;
     }
 
     public void setList(){
@@ -27,20 +32,20 @@ public class HangmanSimpleOOP {
         return list;
     }
 
-    public void setAnswer(String answer){
-        this.answer = answer;
+    public void setWord(String word){
+        this.word = word;
     }
 
-    public String getAnswer(){
-        return answer;
+    public String getWord(){
+        return word;
     }
 
-    public void setAnswersLetters(){
-        this.answersLetters = answer.split("");
+    public void setLetters(){
+        this.letters = word.split("");
     }
 
-    public String[] getAnswersLetters(){
-        return answersLetters;
+    public String[] getLetters(){
+        return letters;
     }
 
     public void setGuess(String guess){
@@ -51,16 +56,18 @@ public class HangmanSimpleOOP {
         return guess;
     }
 
-    public void setPastGuesses(ArrayList<String> pastGuesses){
-       this.pastGuesses = pastGuesses;
+    public void setPastGuesses(){
+           pastGuesses.add(guess);
     }
 
     public ArrayList<String> getPastGuesses(){
         return pastGuesses;
     }
 
-    public void setNumWrongAttempts(int numWrongAttempts){
-        this.numWrongAttempts = numWrongAttempts;
+    public void setNumWrongAttempts(){
+        if (!correct){
+            numWrongAttempts++;
+        }
     }
 
     public int getNumWrongAttempts(){
@@ -77,9 +84,9 @@ public class HangmanSimpleOOP {
 
     // Fill the initial array with blanks so we can replace with letter as we go
     public void setUserProgress(){
-        userProgress = new String[answer.length()];
-        for (int i=0; i<answer.length(); i++){
-            userProgress[i] = " _ ";
+        userProgress = new String[word.length()];
+        for (int i = 0; i< word.length(); i++){
+            userProgress[i] = "_ ";
         }
     }
 
@@ -87,16 +94,32 @@ public class HangmanSimpleOOP {
         return userProgress;
     }
 
-    public String pickRandom(){
-        int rndIndex = 1 + (int)Math.random()*(list.size());
-        answer = list.get(rndIndex);
-        return answer;
+    public void setMaxWrongGuesses(int maxWrongGuesses){
+        this.maxWrongGuesses =  maxWrongGuesses;
+    }
+
+    public int getMaxWrongGuesses() {
+        return maxWrongGuesses;
+    }
+
+    public void setLettersGuessed(){
+        lettersGuessed++;
+    }
+
+    public int getLettersGuessed(){
+        return lettersGuessed;
+    }
+
+    public void pickRandom(){
+        Random rnd = new Random();
+        int rndIndex = rnd.nextInt(list.size());
+        word = list.get(rndIndex);
     }
 
     public String displayWordLength(){
         String str = "";
-        for (int i=0; i<answer.length(); i++){
-            str.concat("_" + " ");
+        for (int i = 0; i< word.length(); i++){
+            str += "_ ";
         }
         return "Here is the word I am thinking of: " + str;
     }
@@ -108,19 +131,25 @@ public class HangmanSimpleOOP {
     public String exitMessage(boolean userWins){
         String thanks = "Thank you for playing!";
         if (userWins){
-            return "You've won! The word was " + answer + ".\n"
+            return "You've won! The word was " + word + ".\n"
                     + thanks;
         } else {
             // come back to this part
-            return "Sorry, you have no more guesses left. The word was " + answer + ".\n"
+            return "Sorry, you have no more guesses left. The word was " + word + ".\n"
                     + "\n" + thanks;
         }
 
     }
 
-    public void check(){
-        if (!correct){
-            numWrongAttempts++;
+    public void updateUserProgress(){
+        for (int i = 0; i < letters.length; i++){
+            if (guess.equals(letters[i])){
+                userProgress[i] = " " + guess + " ";
+                setCorrect(true);
+                // increment letters guessed correctly by one
+                setLettersGuessed();
+
+            }
         }
     }
 
