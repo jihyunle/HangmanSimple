@@ -7,12 +7,16 @@ public class HangmanSimpleOOP {
     private String[] answersLetters;
     private String guess;
     private ArrayList<String> pastGuesses;
+    private int numWrongAttempts;
+    private boolean correct;
+    private String[] userProgress;
 
     public HangmanSimpleOOP(){
         list = new ArrayList<>();
         answer = "";
         guess = "";
         pastGuesses = new ArrayList<>();
+        numWrongAttempts = 0;
     }
 
     public void setList(){
@@ -32,7 +36,7 @@ public class HangmanSimpleOOP {
     }
 
     public void setAnswersLetters(){
-        this.answersLetters = answer.split("");;
+        this.answersLetters = answer.split("");
     }
 
     public String[] getAnswersLetters(){
@@ -47,12 +51,40 @@ public class HangmanSimpleOOP {
         return guess;
     }
 
-    public void setPastGuesses(){
-        pastGuesses.add(guess);
+    public void setPastGuesses(ArrayList<String> pastGuesses){
+       this.pastGuesses = pastGuesses;
     }
 
     public ArrayList<String> getPastGuesses(){
         return pastGuesses;
+    }
+
+    public void setNumWrongAttempts(int numWrongAttempts){
+        this.numWrongAttempts = numWrongAttempts;
+    }
+
+    public int getNumWrongAttempts(){
+        return numWrongAttempts;
+    }
+
+    public void setCorrect(boolean correct){
+        this.correct = correct;
+    }
+
+    public boolean getCorrect(){
+        return correct;
+    }
+
+    // Fill the initial array with blanks so we can replace with letter as we go
+    public void setUserProgress(){
+        userProgress = new String[answer.length()];
+        for (int i=0; i<answer.length(); i++){
+            userProgress[i] = " _ ";
+        }
+    }
+
+    public String[] getUserProgress(){
+        return userProgress;
     }
 
     public String pickRandom(){
@@ -69,9 +101,13 @@ public class HangmanSimpleOOP {
         return "Here is the word I am thinking of: " + str;
     }
 
-    public String exitMessage(boolean b){
+    public String welcomeMessage(){
+        return "Welcome, let's play hangman!";
+    }
+
+    public String exitMessage(boolean userWins){
         String thanks = "Thank you for playing!";
-        if (b){
+        if (userWins){
             return "You've won! The word was " + answer + ".\n"
                     + thanks;
         } else {
@@ -82,6 +118,10 @@ public class HangmanSimpleOOP {
 
     }
 
-    public boolean
+    public void check(){
+        if (!correct){
+            numWrongAttempts++;
+        }
+    }
 
 }

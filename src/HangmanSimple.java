@@ -18,34 +18,34 @@ public class HangmanSimple {
 
         // Initialize array list
         ArrayList<String> list = new ArrayList<>();
-        String word = "";
+        String answer = "";
         String[] letters;
 
         // Add words to array list and return it
         addWords(list);
 
-        // Choose a random word and split it into letters
-        word = chooseRandomWord(list);
-        letters = split(word);
+        // Choose a random answer and split it into letters
+        answer = chooseRandomWord(list);
+        letters = split(answer);
 
-        // Show user the word length
-        showWordLength(word);
+        // Show user the answer length
+        showWordLength(answer);
         System.out.println();
 
         // Show user their guess and # guess they have left
         int count = 0;
-        userTakesGuess(count, letters, word, input);
+        userTakesGuess(count, letters, answer, input);
 
         exit();
     }
 
 
-    public static void userTakesGuess(int count, String[] letters, String word, Scanner input){
+    public static void userTakesGuess(int count, String[] letters, String answer, Scanner input){
         /*
         * Create an array and Fill it with blank underscores
         * */
-        String[] userProgress = new String[word.length()];
-        for (int i=0; i<word.length(); i++){
+        String[] userProgress = new String[answer.length()];
+        for (int i=0; i<answer.length(); i++){
             userProgress[i] = " _ ";
         }
 
@@ -57,13 +57,13 @@ public class HangmanSimple {
         int maxWrongGuesses = 6;
 //        boolean keepGuessing = true;
 
-        while ((count < maxWrongGuesses) && keepGuessing(userProgress, word)){
+        while ((count < maxWrongGuesses)){
             boolean correct = false;
 
-            System.out.println("Enter your letter or word guess: ");
+            System.out.println("Enter your letter or answer guess: ");
             String guess = input.nextLine().toLowerCase();
 
-//            if (userProgress.length==word.length()){
+//            if (userProgress.length==answer.length()){
 //                break;
 //            }
 
@@ -74,13 +74,13 @@ public class HangmanSimple {
                 continue;
             }
 
-            if (guess.equals(word)){
-                System.out.println("You've won! The word was " + word);
+            if (guess.equals(answer)){
+                System.out.println("You've won! The answer was " + answer);
                 break;
             }
 
             System.out.print("Your guess so far: ");
-            for (int i=0; i<letters.length; i++) {  // Iterates as many times as the length of the word
+            for (int i=0; i<letters.length; i++) {  // Iterates as many times as the length of the answer
                 if (guess.equals(letters[i])){
                     userProgress[i] = " " + guess + " ";
                     correct = true;
@@ -101,13 +101,13 @@ public class HangmanSimple {
             }
 
             if (count==maxWrongGuesses){
-                System.out.println("Sorry, you have no more guesses left. The word was " + word);
+                System.out.println("Sorry, you have no more guesses left. The answer was " + answer);
                 break;
             }
 
-            if (keepGuessing(userProgress, word)==false){
-                break;
-            }
+//            if (keepGuessing(userProgress, answer)==false){
+//                break;
+//            }
 
         }
 
